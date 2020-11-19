@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
-class QuranScreen extends Component{
-    render(){
+class ProfileScreen extends Component {
+    render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Text>QuranScreen</Text>
+                <Text>ProfileScreen</Text>
             </View>
         );
     }
 }
 
-export default QuranScreen;
+export default ProfileScreen;
