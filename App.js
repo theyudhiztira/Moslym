@@ -9,6 +9,7 @@ import PrayersScreen from './src/screens/PrayersScreen';
 import QuranScreen from './src/screens/QuranScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import QuranScreen from './src/screens/Quran/QuranScreen';
 
 function HomeScreen({ navigation }) {
     return (
