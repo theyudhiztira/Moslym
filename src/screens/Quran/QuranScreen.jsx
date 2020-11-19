@@ -3,7 +3,8 @@ import { View, Text, StyleSheet } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import QuranCard from './components/QuranCard';
+import ChapterCard from './components/ChapterCard';
+import ChapterList from './components/ChaptersList';
 
 class QuranScreen extends Component{
     state = { 
@@ -22,8 +23,9 @@ class QuranScreen extends Component{
         
         return (
             <View style={{ flex: 1, alignItems: 'center' }}>
+                <StatusBar style='dark' />
                 <SafeAreaView style={{ width: '100%' }}>
-                    <Text style={styles.title}>Quran</Text>
+                    <Text style={styles.title}>Qur'an</Text>
                     <SearchBar
                         placeholder='Search'
                         onChangeText={this.updateSearch}
@@ -37,8 +39,7 @@ class QuranScreen extends Component{
                             border: 'none'
                         }}
                     />
-                    <QuranCard data="Indonesia Raya" />
-                    <StatusBar style='dark' />
+                    <ChapterList />
                 </SafeAreaView>
             </View>
         );
@@ -48,8 +49,10 @@ class QuranScreen extends Component{
 const styles = StyleSheet.create({
     title: {
         fontWeight: '600',
-        fontSize: 23,
-        textAlign: 'center'
+        fontSize: 17,
+        textAlign: 'center',
+        marginBottom: 7,
+        marginTop: 5
     }
 });
 
