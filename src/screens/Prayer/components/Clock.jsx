@@ -8,15 +8,13 @@ class Clock extends Component {
 
     constructor() {
         super();
-
-        this.state = { currentTime: null, currentDay: null, currentDate: null, currentMonth: null, currentYear: null }
-        this.daysArray = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-        this.monthsArray = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-
+        this.state = {
+            currentTime: null,
+        }
     }
 
     getCurrentTime = () => {
-        return moment().format('HH:mm:ss');
+        return this.setState({currentTime: moment().format('HH:mm:ss')});
     }
 
     componentWillUnmount() {
@@ -24,11 +22,11 @@ class Clock extends Component {
     }
 
     componentDidMount() {
-        this.getCurrentTime();
+        this.getCurrentTime()
 
-        // this._interval = setInterval(() => {
-        //     // Your code
-        // }, 5000);
+        this.timer = setInterval(() => {
+            this.getCurrentTime();
+        }, 1000);
     }
 
     
@@ -36,8 +34,8 @@ class Clock extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.daysText}>{this.state.currentDay}</Text>
-                {/* <Text style={styles.timeText}>{this.getCurrentTime()}</Text> */}
+                {/* <Text style={styles.daysText}>{this.state.currentDay}</Text> */}
+                <Text style={styles.timeText}>{this.state.currentTime}</Text>
             </View>
         )
     }
