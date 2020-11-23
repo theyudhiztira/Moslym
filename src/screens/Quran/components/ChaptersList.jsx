@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { Text, ActivityIndicator, SafeAreaView } from 'react-native';
 import Axios from 'axios';
-import ChapterCard from './ChapterCard';
+import ChapterCard from './ChapterCard';;
 
-const apiUrl = 'http://api.quran.com/api/v3/';
-
+const apiUrl = 'https://api.quran.com/api/v3/';
 class ChapterList extends Component {
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             chapters: [],
             isLoading: true
@@ -27,6 +26,11 @@ class ChapterList extends Component {
         });
     }
 
+    openChapter = (chapterId) => {
+        const { navigation } = this.props.navigation;
+        return navigation.navigate('Home')
+    }
+
     componentDidMount = () => {
         this.loadChaptersData();
     }
@@ -36,7 +40,12 @@ class ChapterList extends Component {
         let chapterData = [];
         
         chapters.map(v => {
-            return chapterData.push(<ChapterCard data={v} />);
+            return chapterData.push(<ChapterCard key={v.id} data={v} onPress={ () => {
+                this.props.navigation.navigation.navigate('Chapter', {
+                    chapterId: v.id,
+                    chapterData: v
+                });
+            }} />);
         })
 
         const notFoundMessage = <Text>Not found.</Text>;
@@ -46,11 +55,9 @@ class ChapterList extends Component {
 
     render() { 
         return (
-            <View>
-                {
-                    !this.state.isLoading ? this.renderChapters() : <ActivityIndicator />
-                }
-            </View>
+            <SafeAreaView>
+                    { !this.state.isLoading ? this.renderChapters() : <ActivityIndicator style={{ marginTop: '80%' }} /> }
+            </SafeAreaView>
         );
     }
 }

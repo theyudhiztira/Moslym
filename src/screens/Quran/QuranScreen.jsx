@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { SearchBar } from 'react-native-elements';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import ChapterCard from './components/ChapterCard';
 import ChapterList from './components/ChaptersList';
-
 class QuranScreen extends Component{
     state = { 
         search: ''
@@ -14,6 +11,7 @@ class QuranScreen extends Component{
     updateSearch = (search) => {
         this.setState({search});
     }
+
 
     render(){
         const quranStyle = { 
@@ -26,20 +24,9 @@ class QuranScreen extends Component{
                 <StatusBar style='dark' />
                 <SafeAreaView style={{ width: '100%' }}>
                     <Text style={styles.title}>Qur'an</Text>
-                    <SearchBar
-                        placeholder='Search'
-                        onChangeText={this.updateSearch}
-                        round={true}
-                        value={this.state.search}
-                        showCancel={true}
-                        platform='ios'
-                        lightTheme='default'
-                        containerStyle={{ 
-                            backgroundColor: 'transparent',
-                            border: 'none'
-                        }}
-                    />
-                    <ChapterList />
+                    <ScrollView>
+                        <ChapterList navigation={this.props} />
+                    </ScrollView>
                 </SafeAreaView>
             </View>
         );
