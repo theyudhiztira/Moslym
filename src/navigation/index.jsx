@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import QuranStack from '../screens/Quran/QuranStack';
 import PrayerStack from '../screens/Prayer/PrayerStack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import Home from '../screens/HomeScreen/Home';
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -23,19 +23,6 @@ const InitialScreen = (props) => {
             />
         </View>
     )
-}
-
-const HomeScreen = (props) => {
-    const {navigation} = props;
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Home Screen</Text>
-            <Button
-                title="Go to Details"
-                onPress={() => navigation.navigate('Quran')}
-            />
-        </View>
-    );
 }
 
 class Navigation extends Component {
@@ -63,13 +50,13 @@ class Navigation extends Component {
                         },
                     })}
                     tabBarOptions={{
-                        activeTintColor: 'blue',
-                        inactiveTintColor: 'gray',
+                        activeTintColor: '#0EA17E',
+                        inactiveTintColor: '#A6B1AF',
                     }}
                     initialRouteName="InitialScreen"
                 >
                 
-                    <BottomTab.Screen name="Home" component={HomeScreen} />
+                    <BottomTab.Screen name="Home" component={Home} />
                     <BottomTab.Screen name="Prayer Time" component={PrayerStack} title="Prayer Time" />
                     <BottomTab.Screen name="Qur'an" component={QuranStack} title="Qur'an" />
                 </BottomTab.Navigator>
