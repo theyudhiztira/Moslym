@@ -31,7 +31,7 @@ class QuranScreen extends Component{
             </View>
         );
     }
-}
+}       
 
 const styles = StyleSheet.create({
     title: {
