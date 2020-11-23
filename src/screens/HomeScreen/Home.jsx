@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import BoxTime from './components/BoxTime';
+import Clock from './components/Clock';
 
 
 class Home extends Component {
@@ -38,7 +40,7 @@ class Home extends Component {
                         </View>
                         <View style={styles.content}>
                             <View style={styles.card}>
-
+                                <BoxTime></BoxTime>
                             </View>
                         </View>
                     </SafeAreaView>
@@ -87,8 +89,9 @@ const styles = StyleSheet.create({
     card: {
         backgroundColor: '#fff',
         width:'100%',
-        height: 400,
-        borderRadius: 20
+        height: 'auto',
+        borderRadius: 20,
+        overflow: 'hidden'
     },
     display1: {
         fontSize: 20,

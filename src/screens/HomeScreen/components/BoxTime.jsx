@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     listContent: {
-        padding: 15
+        padding: 15,
     },
     viewSideBySide: {
         flex: 1,
