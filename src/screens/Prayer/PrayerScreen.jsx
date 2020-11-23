@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, ActivityIndicator } from 'react-native';
 import Constants from 'expo-constants';
 import Axios from 'axios';
 import BoxTime from './components/BoxTime';
-import GetLocation from 'react-native-get-location'
+import { StatusBar } from 'expo-status-bar';
 
 const apiUrl = 'https://api.pray.zone/v2/times/today.json';
 
@@ -22,8 +22,8 @@ class PrayerScreen extends Component {
         }
     }
 
-    loadPrayersTime = () => {
-        Axios.get(`${apiUrl}?city=tangerang`)
+    loadPrayersTime = (lat, long) => {
+        Axios.get(`${apiUrl}?longitude=${long}&latitude=${lat}`)
             .then(res => {
                 this.setState({
                     prayersTime: res.data.results.datetime[0],
@@ -36,19 +36,17 @@ class PrayerScreen extends Component {
     }
 
     componentDidMount = () => {
-        this.loadPrayersTime();
-
-        GetLocation.getCurrentPosition({
+        navigator.geolocation.getCurrentPosition((position) => {
+            this.loadPrayersTime(position.coords.latitude, position.coords.longitude)
+        }, (error) => {
+            alert(JSON.stringify(error))
+        }, {
             enableHighAccuracy: true,
-            timeout: 15000,
-        })
-        .then(location => {
-            console.log(location);
-        })
-        .catch(error => {
-            const { code, message } = error;
-            console.warn(code, message);
-        })
+            timeout: 20000,
+            maximumAge: 1000
+        });
+
+        
     }
 
     listPrayersTime = () => {
@@ -58,7 +56,7 @@ class PrayerScreen extends Component {
 
             return <View style={{ alignItems: 'center', justifyContent: 'center', width: '100%' }}>
 
-                <BoxTime title="Sunrise" time={prayersTime.Sunrise} logo="ios-sunny">
+                {/* <BoxTime title="Sunrise" time={prayersTime.Sunrise} logo="ios-sunny">
                 </BoxTime>
 
                 <BoxTime title="Sunset" time={prayersTime.Sunset} logo="ios-sunny">
@@ -68,7 +66,7 @@ class PrayerScreen extends Component {
                 </BoxTime>
 
                 <BoxTime title="Midnight" time={prayersTime.Midnight} logo="ios-sunny">
-                </BoxTime>
+                </BoxTime> */}
 
                 <BoxTime title="Fajr" time={prayersTime.Fajr} logo="ios-sunny">
                 </BoxTime>
@@ -88,21 +86,21 @@ class PrayerScreen extends Component {
         }
     }
 
+    renderPrayerTime = () => {
+        return <ScrollView style={{ width: '100%' }}>
+            {this.listPrayersTime()}
+        </ScrollView>
+    }
+
     render() {
 
         return (
-            <SafeAreaView style={styles.container}>
-                <Text style={styles.title}>Prayers Time</Text>
-
-                
-
-                <ScrollView contentContainerStyle={styles.contentContainer}>
-                    <View style={{ alignItems: 'center', justifyContent: 'center', paddingHorizontal: '10%'}}>
-                        {this.listPrayersTime()}
-                    </View>
-                </ScrollView>
-
-            </SafeAreaView>
+                <SafeAreaView style={{ width: '100%' }}>
+                    <Text style={styles.title}>Prayers Time</Text>
+                    {this.state.isLoading ? <ActivityIndicator style={{ marginTop: '80%' }} /> : this.renderPrayerTime()}
+                    <StatusBar style='dark' />
+                </SafeAreaView>
+            
         );
     }
 }
@@ -116,13 +114,11 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
     },
     title: {
-        marginTop: Constants.statusBarHeight,
-        fontSize: 42,
-        textAlign: 'center'
-    },
-    contentContainer: {
-        marginTop: '5%',
-        width: '100%'
+        fontWeight: '600',
+        fontSize: 17,
+        textAlign: 'center',
+        marginBottom: 7,
+        marginTop: 5
     },
 });
 

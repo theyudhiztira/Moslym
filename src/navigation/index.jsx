@@ -63,7 +63,7 @@ class Navigation extends Component {
                         },
                     })}
                     tabBarOptions={{
-                        activeTintColor: 'tomato',
+                        activeTintColor: 'blue',
                         inactiveTintColor: 'gray',
                     }}
                     initialRouteName="InitialScreen"
