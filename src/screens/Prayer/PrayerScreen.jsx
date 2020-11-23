@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, SafeAreaView, ScrollView, ActivityIndicator } f
 import Constants from 'expo-constants';
 import Axios from 'axios';
 import BoxTime from './components/BoxTime';
+import Clock from './components/Clock';
 import { StatusBar } from 'expo-status-bar';
 
 const apiUrl = 'https://api.pray.zone/v2/times/today.json';
@@ -56,18 +57,6 @@ class PrayerScreen extends Component {
 
             return <View style={{ alignItems: 'center', justifyContent: 'center', width: '100%' }}>
 
-                {/* <BoxTime title="Sunrise" time={prayersTime.Sunrise} logo="ios-sunny">
-                </BoxTime>
-
-                <BoxTime title="Sunset" time={prayersTime.Sunset} logo="ios-sunny">
-                </BoxTime>
-
-                <BoxTime title="Imsak" time={prayersTime.Imsak} logo="ios-sunny">
-                </BoxTime>
-
-                <BoxTime title="Midnight" time={prayersTime.Midnight} logo="ios-sunny">
-                </BoxTime> */}
-
                 <BoxTime title="Fajr" time={prayersTime.Fajr} logo="ios-sunny">
                 </BoxTime>
 
@@ -88,6 +77,7 @@ class PrayerScreen extends Component {
 
     renderPrayerTime = () => {
         return <ScrollView style={{ width: '100%' }}>
+            <Clock></Clock>
             {this.listPrayersTime()}
         </ScrollView>
     }
@@ -95,24 +85,15 @@ class PrayerScreen extends Component {
     render() {
 
         return (
-                <SafeAreaView style={{ width: '100%' }}>
-                    <Text style={styles.title}>Prayers Time</Text>
-                    {this.state.isLoading ? <ActivityIndicator style={{ marginTop: '80%' }} /> : this.renderPrayerTime()}
-                    <StatusBar style='dark' />
-                </SafeAreaView>
-            
+            <SafeAreaView style={{ width: '100%' }}>
+                <StatusBar style='dark' />
+                {this.state.isLoading ? <ActivityIndicator style={{ marginTop: '80%' }} /> : this.renderPrayerTime()}
+            </SafeAreaView>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,        
-    },
-    scrollView: {
-        backgroundColor: 'pink',
-        marginHorizontal: 20,
-    },
     title: {
         fontWeight: '600',
         fontSize: 17,

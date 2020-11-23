@@ -1,58 +1,62 @@
-import React from 'react'
+import React, { Component } from 'react';
 import { View, StyleSheet, Text } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ListItem, Avatar } from 'react-native-elements'
 
-const list = [
-    {
-        name: 'Amy Farha',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        subtitle: 'Vice President'
-    },
-    {
-        name: 'Chris Jackson',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        subtitle: 'Vice Chairman'
-    },
-]
+class BoxTime extends Component {
 
-const BoxTime = (props) => (
-    // <View style={styles.boxSimple}>
-    //     <Text style={styles.title}>
-    //         {props.title}
-    //     </Text>
-    //     <Text style={styles.time}>
-    //         <Ionicons name={props.logo}></Ionicons> {props.time}
-    //     </Text>
-    // </View>
-
-    <View style={styles.list}>
-    {
-        list.map((l, i) => (
-        <ListItem key={i} bottomDivider>
-            <Avatar source={{uri: l.avatar_url}} />
-            <ListItem.Content>
-                <ListItem.Title>{l.name}</ListItem.Title>
-                <ListItem.Subtitle>{l.subtitle}</ListItem.Subtitle>
-            </ListItem.Content>
-        </ListItem>
-        ))
+    constructor(props) {
+        super(props);
     }
-    </View>
-)
+
+    render() {
+        return (
+            <View style={styles.list}>
+                <ListItem>
+                    {/* <Avatar source={{ uri: l.avatar_url }} /> */}
+                    <ListItem.Content style={styles.listContent}>
+                        <View style={{ flexDirection: "row" }}>
+                            <View style={{ flex: 1 }}>
+                                <Text style={styles.titleText}>{this.props.title}</Text>
+                            </View>
+                            <View style={{ flex: 1 }}>
+                                <Text style={styles.timeText}>{this.props.time}</Text>
+                            </View>
+                        </View>
+                    </ListItem.Content>
+                </ListItem>
+            </View>
+        )
+    }
 
 
+    // const BoxTime = (props) => (
+    //     // <View style={styles.boxSimple}>
+    //     //     <Text style={styles.title}>
+    //     //         {props.title}
+    //     //     </Text>
+    //     //     <Text style={styles.time}>
+    //     //         <Ionicons name={props.logo}></Ionicons> {props.time}
+    //     //     </Text>
+    //     // </View>
+
+    //     <View style={styles.list}>
+    //     {
+    //         list.map((l, i) => (
+    //         <ListItem key={i} bottomDivider>
+    //             <Avatar source={{uri: l.avatar_url}} />
+    //             <ListItem.Content>
+    //                 <ListItem.Title>{l.name}</ListItem.Title>
+    //                 <ListItem.Subtitle>{l.subtitle}</ListItem.Subtitle>
+    //             </ListItem.Content>
+    //         </ListItem>
+    //         ))
+    //     }
+    //     </View>
+    // )
+}
 
 const styles = StyleSheet.create({
-    boxSimple: {
-        backgroundColor: '#fdcfdf',
-        borderRadius: 4,
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        margin: 10,
-        width: '100%'
-    },
-
     title: {
         fontWeight: 'bold'
     },
@@ -61,7 +65,26 @@ const styles = StyleSheet.create({
         fontStyle: 'italic'
     },
     list: {
-        width: '100%'
+        width: '100%',
+    },
+    listContent: {
+        padding: 15
+    },
+    viewSideBySide: {
+        flex: 1,
+        flexDirection: 'row',
+    },
+    titleText: {
+        fontWeight: 'bold',
+        fontSize: 15,
+        justifyContent: 'flex-start',
+        textAlign: 'left'
+    },
+    timeText: {
+        fontWeight: 'bold',
+        fontSize: 15,
+        justifyContent: 'flex-end',
+        textAlign: 'right'
     }
 })
 
