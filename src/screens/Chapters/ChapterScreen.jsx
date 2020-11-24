@@ -16,14 +16,15 @@ class ChapterScreen extends Component {
         }
     }
 
-    componentDidMount = () => {
-        this.setState({
+    componentDidMount = async () => {
+        await this.setState({
             chapterData: this.props.route.params.chapterData
         });
-        this.props.navigation.setOptions({
+        await this.props.navigation.setOptions({
             title: this.props.route.params.chapterData.name_simple
         });
-        this._fetchFirstPageData();
+        
+        await this._fetchLocalData();
     }
 
     componentWillUnmount = () => {
@@ -31,58 +32,48 @@ class ChapterScreen extends Component {
             chapterData: {},
             verseData: {},
             isLoading: true,
-            isLoadingMoreData: false,
-            metaData: {},
             reachedEndOfChapter: false
         });
-        const CancelToken = Axios.CancelToken;
-        cance
     }
 
-    _fetchFirstPageData = () => {
-        Axios.get(`http://api.quran.com/api/v3/chapters/${this.props.route.params.chapterId}/verses?recitation=7&translations=33&language=id&limit=25&text_type=words`)
-        .then(res => {
-            let dataToSupply = [];
-            const data = res.data;
-            if(this.props.route.params.chapterData.bismillah_pre){
-                dataToSupply = [...dataToSupply,{
-                    id: 1,
-                    text_madani: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
-                    verse_number: '0',
-                    translations: [{
-                        text: 'Dengan nama Allah Yang Maha Pengasih, Maha Penyayang'
-                    }]
-                }];
+    _fetchLocalData = () => {
+        const chapterData = require('../../../assets/data/verseData.json');
+        let dataToSupply = [];
+        const data = chapterData[this.state.chapterData.id];
+        
+        if(this.props.route.params.chapterData.bismillah_pre){
+            dataToSupply = [...dataToSupply,{
+                chapter_id: this.state.chapterData.id,
+                text: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+                verse_number: '0',
+                translation_indonesian: 'Dengan menyebut nama Allah Yang Maha Pemurah lagi Maha Penyayang.',
+                translation_english: 'In the name of Allah, the Entirely Merciful, the Especially Merciful.'
+            }];
+        }
+
+        (Object.values(data)).map(verse => {
+            if(verse){
+                dataToSupply = [...dataToSupply, verse];
             }
+        });
 
-            data.verses.map(verse => {
-                if(verse){
-                    dataToSupply = [...dataToSupply, verse];
-                }
-            });
-
-            return this.setState({
-                isLoading: false,
-                verseData: dataToSupply,
-                metaData: data.meta
-            });
-        })
-        .catch(err => {
-            console.log(err)
-        })
+        this.setState({
+            verseData: dataToSupply,
+            isLoading: false
+        });
     }
 
     renderVerseCard = () => {
         return <FlatList 
             contentContainerStyle={Style.listStyle}
             data={this.state.verseData}
-            keyExtractor={data => data.id.toString()}
+            keyExtractor={data => data.verse_number.toString()}
             renderItem={({ item }) => (
                 <VerseCard data={item} />
             )}
             onEndReached={() => {
                 if (!this.onEndReachedCalledDuringMomentum) {
-                    this._loadMoreData();
+                    // this._loadMoreData();
                     this.onEndReachedCalledDuringMomentum = true;
                 }
             }}
@@ -91,42 +82,7 @@ class ChapterScreen extends Component {
             ListFooterComponent={this.renderFooter}
         />
     }
-
-    _loadMoreData = () => {
-        this.setState({
-            isLoadingMoreData: true
-        });
-
-        const metaData = this.state.metaData;
-        if(!this.state.isLoadingMoreData && metaData.next_page != null && this.state.reachedEndOfChapter){
-            return Axios.get(`http://api.quran.com/api/v3/chapters/${this.props.route.params.chapterId}/verses?recitation=7&translations=33&language=id&limit=25&text_type=words&page=${this.state.metaData.next_page}`)
-            .then(res => {
-                let dataToSupply = this.state.verseData;
-                const data = res.data;
-
-                data.verses.map(verse => {
-                    if(verse){
-                        dataToSupply = [...dataToSupply, verse];
-                    }
-                });
-
-                return this.setState({
-                    isLoadingMoreData: false,
-                    verseData: dataToSupply,
-                    metaData: data.meta
-                });
-            })
-            .catch(err => {
-                console.log(err)
-            })
-        }else{
-            return this.setState({
-                isLoadingMoreData: false,
-                reachedEndOfChapter: true
-            })
-        }
-    }
-
+    
     renderFooter = () => {
         // if(!this.state.isLoadingMoreData) return null;
 

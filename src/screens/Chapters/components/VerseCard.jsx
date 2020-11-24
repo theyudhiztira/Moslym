@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, Vibration, View } from 'react-native';
 
 class VerseCard extends Component {
     constructor(props) {
@@ -11,10 +11,12 @@ class VerseCard extends Component {
         const data = this.props.data;
 
         return (
-            <View style={Style.cardContainer}>
-                <Text style={Style.arabicText}>{data.text_madani}</Text>
-                <Text style={Style.translation}>{ data.verse_number > 0 ? `${data.verse_number}. ` : ""}{data.translations[0].text}</Text>
-            </View>
+            <TouchableOpacity>
+                <View style={Style.cardContainer}>
+                    <Text style={Style.arabicText}>{data.text}</Text>
+                    <Text style={Style.translation}>{ data.verse_number > 0 ? `${data.verse_number}. ` : ""}{data.translation_indonesian}</Text>
+                </View>
+            </TouchableOpacity>
         );
     }
 }
