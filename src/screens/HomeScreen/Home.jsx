@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, ScrollView } from 'react-native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import BoxTime from './components/BoxTime';
 import MoslymButton from '../Components/Button';
-
+import Clock from './components/Clock';
 
 class Home extends Component {
 
@@ -16,40 +16,56 @@ class Home extends Component {
         const backgroundImage = require('../../../assets/homeScreenBackground.png');
 
         return (
+
             <View style={{ flex: 1, alignItems: 'center' }}>
                 <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
-                    <SafeAreaView style={styles.flexWrapper}>
-                        <View style={styles.headline}>
-
-                            <View style={styles.flexMedia}>
-                                <View style={{ flex: '1', flexDirection: 'row' }}>
-                                    <EvilIcons name="location" size={30} color="white" style={{ justifyContent: 'flex-start', textAlign: 'left' }}/>
-                                    <View>
-                                        <Text style={styles.textCity}>Jakarta</Text>
-                                        <Text style={styles.textCountry}>Indonesia</Text>
-                                    </View>
-                                </View>
-                                <View style={{ flex: '1' }}>
-                                    <EvilIcons name="gear" size={30} color="white" style={{ justifyContent: 'flex-end', textAlign: 'right' }}/>
+                    
+                    <View style={styles.header}>
+                        <View style={styles.flexMedia}>
+                            <View style={{ flex: '1', flexDirection: 'row' }}>
+                                <EvilIcons name="location" size={30} color="white" style={{ justifyContent: 'flex-start', textAlign: 'left' }}/>
+                                <View>
+                                    <Text style={styles.textCity}>Jakarta</Text>
+                                    <Text style={styles.textCountry}>Indonesia</Text>
                                 </View>
                             </View>
-
-                            <View>
-                                <Clock></Clock>
+                            <View style={{ flex: '1' }}>
+                                <EvilIcons name="gear" size={30} color="white" style={{ justifyContent: 'flex-end', textAlign: 'right' }}/>
                             </View>
-                            
-                            <MoslymButton text='Arah Kiblat' width={100} bgColor='#FFFFFF' textColor="#000000" />
-                        
                         </View>
+                    </View>
 
-                        <View style={styles.content}>
-                            
+                    <ScrollView>
+                  
+                        <SafeAreaView style={styles.flexWrapper}>
+                    
+                            <View style={styles.headline}>
+
+                                <View>
+                                    <Clock></Clock>
+                                </View>
+
+                                <View style={{flex:1, justifyContent: 'center', width:'100%', alignItems:'center'}}>
+
+                                    <MoslymButton text='Arah Kiblat' width={150} bgColor='rgba(0,0,0,0.15)' textColor="#FFFFFF" btnIcon="ios-compass" />
+                                
+                                </View>
+                         
+
+                            </View>
+
+                            <View style={styles.content}>
+
                                 <BoxTime />
 
-                        </View>
-                    </SafeAreaView>
+                            </View>
+
+                        </SafeAreaView>
+                   </ScrollView>
                 </ImageBackground>
             </View>
+
+
       
         
         )
@@ -58,6 +74,11 @@ class Home extends Component {
 }
 
 const styles = StyleSheet.create({
+    header:{
+        marginTop:40,
+        paddingLeft:10,
+        paddingRight:10,
+    },  
     flexMedia:{
         flexDirection: 'row'
     },
@@ -72,10 +93,7 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     headline: {
-        height:100,
         marginBottom:30,
-        marginTop:30,
-        paddingHorizontal: 10
     },
     card: {
         backgroundColor: '#fff',
