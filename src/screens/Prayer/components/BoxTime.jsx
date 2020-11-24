@@ -70,7 +70,7 @@ class BoxTime extends Component {
 
     listPrayersTime = (title, time) => {
         return <View style={styles.list}>
-            <ListItem>
+            <ListItem bottomDivider>
                 <ListItem.Content style={styles.listContent}>
                     <View style={{ flexDirection: "row" }}>
                         <View style={{ flex: 1 }}>
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     listContent: {
-        padding: 15
+        padding: 15,
     },
     viewSideBySide: {
         flex: 1,

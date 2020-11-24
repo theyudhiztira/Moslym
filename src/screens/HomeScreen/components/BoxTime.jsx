@@ -70,7 +70,7 @@ class BoxTime extends Component {
 
     listPrayersTime = (title, time) => {
         return <View style={styles.list}>
-            <ListItem>
+            <ListItem bottomDivider>
                 <ListItem.Content style={styles.listContent}>
                     <View style={{ flexDirection: "row" }}>
                         <View style={{ flex: 1 }}>
@@ -93,7 +93,7 @@ class BoxTime extends Component {
 
     render() {
         return (
-            this.state.isLoading ? <ActivityIndicator style={{ marginTop: '80%' }} /> : this.renderPrayerTime()
+            this.state.isLoading ? <ActivityIndicator /> : this.renderPrayerTime()
         )
     }
 }

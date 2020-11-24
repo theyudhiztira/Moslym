@@ -19,7 +19,7 @@ class PrayerScreen extends Component {
             <SafeAreaView style={{ width: '100%' }}>
                 <StatusBar style='dark' />
                 <Clock></Clock>
-                <BoxTime></BoxTime>
+                {/* <BoxTime></BoxTime> */}
             </SafeAreaView>
         );
     }

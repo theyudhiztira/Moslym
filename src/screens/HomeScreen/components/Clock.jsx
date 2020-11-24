@@ -1,8 +1,6 @@
-import React, { Component, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Platform, ImageBackground } from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 import moment from 'moment';
-
-const image = { uri: "https://reactjs.org/logo-og.png" };
 
 class Clock extends Component {
 
@@ -14,7 +12,7 @@ class Clock extends Component {
     }
 
     getCurrentTime = () => {
-        return this.setState({currentTime: moment().format('HH:mm:ss')});
+        return this.setState({ currentTime: moment().format('HH:mm:ss') });
     }
 
     componentWillUnmount() {
@@ -29,13 +27,19 @@ class Clock extends Component {
         }, 1000);
     }
 
-    
-
     render() {
         return (
             <View style={styles.container}>
-                {/* <Text style={styles.daysText}>{this.state.currentDay}</Text> */}
-                <Text style={styles.timeText}>{this.state.currentTime}</Text>
+                <View>
+                    <Text style={styles.textTitle}>Asr</Text>
+                </View>
+                <View style={{marginVertical: 5}}>
+                    <Text style={styles.textTime}>{this.state.currentTime}</Text>
+                </View>
+                <View>
+                    {/* <Text style={styles.textDate}>{moment().format('dddd, D MMM YYYY')}</Text> */}
+                    <Text style={styles.textDate}>Remaining</Text>
+                </View>
             </View>
         )
     }
@@ -43,11 +47,16 @@ class Clock extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        paddingTop: (Platform.OS === 'ios') ? 20 : 0,
-        justifyContent: 'center',
         alignItems: 'center',
-        marginVertical: 20,
+        justifyContent: 'center',
+        marginTop: 30
+    },
+    clockBackground: {
+        // backgroundColor: 'blue',
+        // borderWidth: 4,
+        // borderColor: "#fff",
+        padding: 20,
+        borderRadius: 20
     },
     headerText: {
         fontSize: 30,
@@ -56,18 +65,23 @@ const styles = StyleSheet.create({
         color: 'black',
         fontWeight: "bold"
     },
-    timeText: {
-        fontSize: 50,
-        color: '#f44336'
+    textTime: {
+        fontSize: 40,
+        color: '#fff',
+        letterSpacing: 3,
+        fontWeight: 'bold'
     },
     daysText: {
         color: '#2196f3',
         fontSize: 25,
-        paddingBottom: 0
     },
-    dateText: {
-        color: 'black',
-        paddingBottom: 0
+    textDate: {
+        color: 'white',
+    },
+    textTitle: {
+        fontSize: 20,
+        color: 'white',
+        fontWeight: 'bold'
     },
     image: {
         flex: 1,

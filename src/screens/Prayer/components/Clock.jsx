@@ -1,8 +1,6 @@
-import React, { Component, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Platform, ImageBackground } from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 import moment from 'moment';
-
-const image = { uri: "https://reactjs.org/logo-og.png" };
 
 class Clock extends Component {
 
@@ -29,12 +27,9 @@ class Clock extends Component {
         }, 1000);
     }
 
-    
-
     render() {
         return (
-            <View style={styles.container}>
-                {/* <Text style={styles.daysText}>{this.state.currentDay}</Text> */}
+            <View>
                 <Text style={styles.timeText}>{this.state.currentTime}</Text>
             </View>
         )
@@ -58,7 +53,7 @@ const styles = StyleSheet.create({
     },
     timeText: {
         fontSize: 50,
-        color: '#f44336'
+        // color: '#f44336'
     },
     daysText: {
         color: '#2196f3',
