@@ -13,17 +13,12 @@ class ChapterList extends Component {
         }
     }
 
-    loadChaptersData = () => {
-        Axios.get(`${apiUrl}/chapters?language=id`)
-        .then(res => {
-            this.setState({
-                chapters: res.data.chapters,
-                isLoading: false
-            });
+    _loadChaptersData = async () => {
+        const chapterData = require('../../../../assets/data/chapterData.json');
+        await this.setState({
+            chapters: chapterData,
+            isLoading: false
         })
-        .catch(err => {
-            console.log(err);
-        });
     }
 
     openChapter = (chapterId) => {
@@ -32,14 +27,13 @@ class ChapterList extends Component {
     }
 
     componentDidMount = () => {
-        this.loadChaptersData();
+        this._loadChaptersData();
     }
 
     renderChapters = () => {
-        const chapters = Object.values(this.state.chapters);
         let chapterData = [];
-        
-        chapters.map(v => {
+
+        (this.state.chapters).map(v => {
             return chapterData.push(<ChapterCard key={v.id} data={v} onPress={ () => {
                 this.props.navigation.navigation.navigate('Chapter', {
                     chapterId: v.id,

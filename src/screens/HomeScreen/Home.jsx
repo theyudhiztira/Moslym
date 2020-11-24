@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import BoxTime from './components/BoxTime';
 import MoslymButton from '../Components/Button';
 
@@ -20,14 +20,22 @@ class Home extends Component {
                 <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
                     <SafeAreaView style={styles.flexWrapper}>
                         <View style={styles.headline}>
+
                             <View style={styles.flexMedia}>
-                                <View>
-                                    <Ionicons name='ios-locate' size={30} color='white'/>
+                                <View style={{ flex: '1', flexDirection: 'row' }}>
+                                    <EvilIcons name="location" size={30} color="white" style={{ justifyContent: 'flex-start', textAlign: 'left' }}/>
+                                    <View>
+                                        <Text style={styles.textCity}>Jakarta</Text>
+                                        <Text style={styles.textCountry}>Indonesia</Text>
+                                    </View>
                                 </View>
-                                <View>
-                                    <Text style={styles.display1}> Jakarta </Text>
-                                    <Text style={styles.display2}> Indonesia </Text>
+                                <View style={{ flex: '1' }}>
+                                    <EvilIcons name="gear" size={30} color="white" style={{ justifyContent: 'flex-end', textAlign: 'right' }}/>
                                 </View>
+                            </View>
+
+                            <View>
+                                <Clock></Clock>
                             </View>
                             
                             <MoslymButton text='Arah Kiblat' width={100} bgColor='#FFFFFF' textColor="#000000" />
@@ -51,10 +59,7 @@ class Home extends Component {
 
 const styles = StyleSheet.create({
     flexMedia:{
-        flex:1,
-        justifyContent: 'flex-start',
-        flexDirection: 'row',
-        alignItems: 'center',
+        flexDirection: 'row'
     },
     textAlignCenter: {
         textAlign: 'center'
@@ -70,16 +75,24 @@ const styles = StyleSheet.create({
         height:100,
         marginBottom:30,
         marginTop:30,
+        paddingHorizontal: 10
     },
-    display1: {
-        fontSize: 20,
+    card: {
+        backgroundColor: '#fff',
+        width:'100%',
+        height: 'auto',
+        borderRadius: 20,
+        overflow: 'hidden'
+    },
+    textCity: {
+        fontSize: 15,
         color: '#fff',
         textTransform: 'uppercase',
         letterSpacing: 2,
         fontWeight: "700"
     },
-    display2: {
-        fontSize: 32,
+    textCountry: {
+        fontSize: 10,
         color: '#fff',
         textTransform: 'uppercase',
         letterSpacing: 2,
