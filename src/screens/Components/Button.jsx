@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {TouchableOpacity, Text, View} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Feather from 'react-native-vector-icons/Feather';
 
 // Button Component. Required props: bgColor, buttonIcon, textColor, width
 class MoslymButton extends Component{
@@ -30,7 +30,7 @@ class MoslymButton extends Component{
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
-                <Ionicons name={this.props.btnIcon} size={20} color={this.props.textColor} />
+                <Feather name={this.props.btnIcon} size={20} color={this.props.textColor} />
                 <Text style={{
                     textAlign: 'center', 
                     color: this.props.textColor,

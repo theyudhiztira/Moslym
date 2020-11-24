@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, ScrollView, ActivityIndicator } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Feather from 'react-native-vector-icons/Feather';
 import Axios from 'axios';
 
 const apiUrl = 'https://api.pray.zone/v2/times/today.json';
@@ -54,25 +54,25 @@ class BoxTime extends Component {
 
             return <View style={{ flex:1, alignItems: 'stretch', justifyContent: 'center', width: '100%' }}>
 
-                {this.listPrayersTime("Fajr", prayersTime.Fajr)}
+                {this.listPrayersTime("Fajr", prayersTime.Fajr, 'sunrise')}
 
-                {this.listPrayersTime("Dhuhr", prayersTime.Dhuhr)}
+                {this.listPrayersTime("Dhuhr", prayersTime.Dhuhr, 'sun')}
 
-                {this.listPrayersTime("Asr", prayersTime.Asr)}
+                {this.listPrayersTime("Asr", prayersTime.Asr, 'cloud')}
 
-                {this.listPrayersTime("Maghrib", prayersTime.Maghrib)}
+                {this.listPrayersTime("Maghrib", prayersTime.Maghrib, 'sunset')}
 
-                {this.listPrayersTime("Isha", prayersTime.Isha)}
+                {this.listPrayersTime("Isha", prayersTime.Isha, 'moon')}
 
             </View>;
         }
     }
 
-    listPrayersTime = (title, time) => {
+    listPrayersTime = (title, time, icon) => {
         return ( 
         <View style={styles.listWrapper}>
             <View style={styles.prayerIcon}>
-                <Ionicons name='ios-locate' size={30} color='#0EA17'/>            
+                <Feather name={icon} size={20} color='gray'/>            
             </View>
             <View style={styles.prayerContent}>
                 <Text style={styles.prayerTitle}>
@@ -80,7 +80,16 @@ class BoxTime extends Component {
                 </Text>
             </View>
             <View style={styles.prayerTime}>
-                <Text>{time}</Text>
+                <View style={{
+                    flex:1,
+                    flexDirection:'row',
+                    alignItems: 'center'}
+                }>
+                    <Feather name='clock' size={15} color='gray' style={{marginRight: 5}}/>
+                    <Text>
+                        {time}
+                    </Text>
+                </View>
             </View>
         </View> 
         )
@@ -108,7 +117,7 @@ const styles = StyleSheet.create({
         fontWeight: '600'
     },
     prayerTime: {
-        marginLeft: 'auto'
+        marginLeft: 'auto',
     },
     listWrapper:{
         flex:1,

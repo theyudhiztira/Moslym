@@ -42,12 +42,12 @@ class Home extends Component {
                             <View style={styles.headline}>
 
                                 <View>
-                                    <Clock></Clock>
+                                    <Clock />
                                 </View>
 
                                 <View style={{flex:1, justifyContent: 'center', width:'100%', alignItems:'center'}}>
 
-                                    <MoslymButton text='Arah Kiblat' width={150} bgColor='rgba(0,0,0,0.15)' textColor="#FFFFFF" btnIcon="ios-compass" />
+                                    <MoslymButton text='Arah Kiblat' width={150} bgColor='rgba(0,0,0,0.15)' textColor="#FFFFFF" btnIcon="compass" />
                                 
                                 </View>
                          
