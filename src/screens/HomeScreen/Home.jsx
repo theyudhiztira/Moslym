@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import BoxTime from './components/BoxTime';
-import Clock from './components/Clock';
+import MoslymButton from '../Components/Button';
 
 
 class Home extends Component {
@@ -30,18 +30,14 @@ class Home extends Component {
                                 </View>
                             </View>
                             
-                            <TouchableOpacity style={styles.buttonWhite}>
-                                <View>
-                                    <Text style={styles.textAlignCenter}>
-                                        Arah Kiblat
-                                    </Text>
-                                </View>
-                            </TouchableOpacity>
+                            <MoslymButton text='Arah Kiblat' width={100} bgColor='#FFFFFF' textColor="#000000" />
+                        
                         </View>
+
                         <View style={styles.content}>
-                            <View style={styles.card}>
-                                <BoxTime></BoxTime>
-                            </View>
+                            
+                                <BoxTime />
+
                         </View>
                     </SafeAreaView>
                 </ImageBackground>
@@ -63,17 +59,6 @@ const styles = StyleSheet.create({
     textAlignCenter: {
         textAlign: 'center'
     },  
-    buttonWhite: {
-        paddingLeft: 8,
-        paddingRight: 8,
-        paddingTop: 10,
-        paddingBottom: 10,
-        width: 100,
-        borderRadius: 6,
-        marginTop: 20,
-        marginLeft: 6,
-        backgroundColor: 'white',
-    },
     flexWrapper:{
         flex: 1,
         flexDirection: 'column',
@@ -85,13 +70,6 @@ const styles = StyleSheet.create({
         height:100,
         marginBottom:30,
         marginTop:30,
-    },
-    card: {
-        backgroundColor: '#fff',
-        width:'100%',
-        height: 'auto',
-        borderRadius: 20,
-        overflow: 'hidden'
     },
     display1: {
         fontSize: 20,

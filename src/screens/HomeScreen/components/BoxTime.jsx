@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, ScrollView, ActivityIndicator } from 'react-native'
-import { ListItem } from 'react-native-elements'
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import Axios from 'axios';
 
 const apiUrl = 'https://api.pray.zone/v2/times/today.json';
@@ -52,7 +52,7 @@ class BoxTime extends Component {
 
             const prayersTime = this.state.prayersTime.times;
 
-            return <View style={{ alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+            return <View style={{ flex:1, alignItems: 'stretch', justifyContent: 'center', width: '100%' }}>
 
                 {this.listPrayersTime("Fajr", prayersTime.Fajr)}
 
@@ -69,20 +69,21 @@ class BoxTime extends Component {
     }
 
     listPrayersTime = (title, time) => {
-        return <View style={styles.list}>
-            <ListItem>
-                <ListItem.Content style={styles.listContent}>
-                    <View style={{ flexDirection: "row" }}>
-                        <View style={{ flex: 1 }}>
-                            <Text style={styles.titleText}>{title}</Text>
-                        </View>
-                        <View style={{ flex: 1 }}>
-                            <Text style={styles.timeText}>{time}</Text>
-                        </View>
-                    </View>
-                </ListItem.Content>
-            </ListItem>
-        </View>
+        return ( 
+        <View style={styles.listWrapper}>
+            <View style={styles.prayerIcon}>
+                <Ionicons name='ios-locate' size={30} color='#0EA17'/>            
+            </View>
+            <View style={styles.prayerContent}>
+                <Text style={styles.prayerTitle}>
+                    {title}
+                </Text>
+            </View>
+            <View style={styles.prayerTime}>
+                <Text>{time}</Text>
+            </View>
+        </View> 
+        )
     }
 
     renderPrayerTime = () => {
@@ -99,35 +100,29 @@ class BoxTime extends Component {
 }
 
 const styles = StyleSheet.create({
-    title: {
-        fontWeight: 'bold'
+    prayerContent:{
+        marginLeft: 10
     },
-
-    time: {
-        fontStyle: 'italic'
+    prayerTitle: {
+        fontSize: 20,
+        fontWeight: '600'
     },
-    list: {
-        width: '100%',
+    prayerTime: {
+        marginLeft: 'auto'
     },
-    listContent: {
-        padding: 15,
-    },
-    viewSideBySide: {
-        flex: 1,
-        flexDirection: 'row',
-    },
-    titleText: {
-        fontWeight: 'bold',
-        fontSize: 15,
+    listWrapper:{
+        flex:1,
         justifyContent: 'flex-start',
-        textAlign: 'left'
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'white',
+        marginBottom: 10,
+        paddingTop:20,
+        paddingBottom:20,
+        paddingLeft:15,
+        paddingRight:15,
+        borderRadius: 10
     },
-    timeText: {
-        fontWeight: 'bold',
-        fontSize: 15,
-        justifyContent: 'flex-end',
-        textAlign: 'right'
-    }
 })
 
 export default BoxTime;
