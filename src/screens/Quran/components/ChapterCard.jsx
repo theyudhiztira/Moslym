@@ -13,15 +13,15 @@ class ChapterCard extends Component{
             <TouchableOpacity style={style.cardContainer} onPress={this.props.onPress}>
                 <View style={style.numberContainer}>
                     <Text style={{ 
-                        fontSize: 15,
+                        fontSize: 17,
                         textAlign: 'right'
                     }}>{this.props.data.id}.</Text>
                 </View>
                 <View style={style.latinContainer}>
                     <Text style={{ 
-                        fontSize: 17,
-                    }}>{this.props.data.name_simple} <Text>( {this.props.data.verses_count} )</Text></Text>
-                    <Text style={{ color: '#53555A' }}>{this.props.data.translated_name.name}</Text>
+                        fontSize: 19,
+                    }}>{this.props.data.name_simple}</Text>
+                    <Text style={{ color: '#53555A' }}>{this.props.data.name_indonesian} ( {this.props.data.verses_count} )</Text>
                 </View>
                 <View style={style.arabicContainer}>
                     <Text style={{ 
