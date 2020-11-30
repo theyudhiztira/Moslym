@@ -20,7 +20,7 @@ class ChapterCard extends Component{
                 <View style={style.latinContainer}>
                     <Text style={{ 
                         fontSize: 19,
-                    }}>{this.props.data.name_simple}</Text>
+                    }}>{this.props.data.name_complex}</Text>
                     <Text style={{ color: '#53555A' }}>{this.props.data.name_indonesian} ( {this.props.data.verses_count} )</Text>
                 </View>
                 <View style={style.arabicContainer}>
@@ -50,7 +50,7 @@ const style = StyleSheet.create({
         paddingTop: 25,
         paddingBottom: 25,
         alignItems: 'flex-end',
-        width: 35
+        width: 41
     },
     latinContainer: { 
         height: 'auto',

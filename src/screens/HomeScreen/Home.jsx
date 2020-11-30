@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, StyleSheet, ImageBackground, ScrollView } from 'react-native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import BoxTime from './components/BoxTime';
-import MoslymButton from '../Components/Button';
+// import MoslymButton from '../Components/Button';
 import Clock from './components/Clock';
 
 class Home extends Component {
@@ -47,7 +47,7 @@ class Home extends Component {
 
                                 <View style={{flex:1, justifyContent: 'center', width:'100%', alignItems:'center'}}>
 
-                                    <MoslymButton text='Arah Kiblat' width={150} bgColor='rgba(0,0,0,0.15)' textColor="#FFFFFF" btnIcon="compass" />
+                                    {/* <MoslymButton text='Arah Kiblat' width={150} bgColor='rgba(0,0,0,0.15)' textColor="#FFFFFF" btnIcon="compass" /> */}
                                 
                                 </View>
                          

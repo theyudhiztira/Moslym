@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import Axios from 'axios';
+import Animated, { Easing, timing } from 'react-native-reanimated';
 import VerseCard from './components/VerseCard';
+import PlayerPanel from './components/PlayerPanel';
+import VerseHeader from './components/VerseHeader';
+import { Audio } from 'expo-av';
 
 class ChapterScreen extends Component {
     constructor(props) {
@@ -10,9 +13,10 @@ class ChapterScreen extends Component {
             chapterData: {},
             verseData: {},
             isLoading: true,
-            isLoadingMoreData: false,
+            isScrolling: false,
             metaData: {},
-            reachedEndOfChapter: false
+            fadeAnim: new Animated.Value(95),
+            currentIndex: 0
         }
     }
 
@@ -21,7 +25,7 @@ class ChapterScreen extends Component {
             chapterData: this.props.route.params.chapterData
         });
         await this.props.navigation.setOptions({
-            title: this.props.route.params.chapterData.name_simple
+            title: this.props.route.params.chapterData.name_complex
         });
         
         await this._fetchLocalData();
@@ -36,12 +40,12 @@ class ChapterScreen extends Component {
         });
     }
 
-    _fetchLocalData = () => {
+    _fetchLocalData = async () => {
         const chapterData = require('../../../assets/data/verseData.json');
         let dataToSupply = [];
-        const data = chapterData[this.state.chapterData.id];
+        const data = chapterData[(this.state.chapterData.id) - 1];
         
-        if(this.props.route.params.chapterData.bismillah_pre){
+        if(data.bismillah_pre){
             dataToSupply = [...dataToSupply,{
                 chapter_id: this.state.chapterData.id,
                 text: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
@@ -51,13 +55,13 @@ class ChapterScreen extends Component {
             }];
         }
 
-        (Object.values(data)).map(verse => {
+        (Object.values(data.verses)).map(verse => {
             if(verse){
                 dataToSupply = [...dataToSupply, verse];
             }
         });
 
-        this.setState({
+        await this.setState({
             verseData: dataToSupply,
             isLoading: false
         });
@@ -67,54 +71,127 @@ class ChapterScreen extends Component {
         return <FlatList 
             contentContainerStyle={Style.listStyle}
             data={this.state.verseData}
+            ref={(ref) => {this.flatListRef = ref}}
             keyExtractor={data => data.verse_number.toString()}
             renderItem={({ item }) => (
                 <VerseCard data={item} />
             )}
             onEndReached={() => {
                 if (!this.onEndReachedCalledDuringMomentum) {
-                    // this._loadMoreData();
                     this.onEndReachedCalledDuringMomentum = true;
                 }
             }}
             onEndReachedThreshold={0.5}
-            onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
-            ListFooterComponent={this.renderFooter}
+            onMomentumScrollBegin={(e) => { 
+                this.onEndReachedCalledDuringMomentum = false; 
+                this.setState({
+                    isScrolling: true
+                })
+                this._hidePlayer()
+            }}
+            onMomentumScrollEnd={(e) => {
+                this.setState({
+                    isScrolling: false
+                })
+                this._showPlayer()
+            }}
+            ListHeaderComponent={this.renderHeader}
         />
     }
-    
-    renderFooter = () => {
-        // if(!this.state.isLoadingMoreData) return null;
 
-        return (
-            <View
-                style={{
-                    position: 'relative',
-                    width: 25,
-                    height: 25,
-                    paddingVertical: 20,
-                    borderTopWidth: 1,
-                    marginTop: 10,
-                    marginBottom: 10
-                }}
-            >
-                <ActivityIndicator animating size="large" />
-            </View>
-        );
+    _hidePlayer = () => {
+        return timing(this.state.fadeAnim, {
+            toValue: 0,
+            duration: 350,
+            easing: Easing.inOut(Easing.ease)
+        }).start();
+    }
+
+    _showPlayer = () => {
+        return timing(this.state.fadeAnim, {
+            toValue: 95,
+            duration: 575,
+            easing: Easing.inOut(Easing.ease),
+        }).start();
+    }
+
+    renderPlayer = () => {
+        return <PlayerPanel 
+            fadeAnim={this.state.fadeAnim}
+            chapterData={this.state.chapterData}
+            forwardTap={this._forwardTap}
+            backwardTap={this._backwardTap}
+            currentIndex={this.state.currentIndex} 
+            playTap={this._playTap}
+        />;
+    }
+
+    renderHeader = () => {
+        return <VerseHeader chapterData={this.state.chapterData} />
+    }
+
+    _playTap = async () => {
+        // const soundObject = new Audio.Sound();
+
+        // await soundObject.loadAsync({
+        //     uri: 'http://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/7/low'
+        // })
+        // soundObject.playAsync();
+        // soundObject.unloadAsync();
+        // try {
+        //     console.log("Jalan");
+        //     await soundObject.loadAsync(require('../../../assets/low.mp3'));
+        //     await soundObject.playAsync();
+        //     console.log(soundObject);
+        //     // Your sound is playing!
+
+        //     // Don't forget to unload the sound from memory
+        //     // when you are done using the Sound object
+        //     await soundObject.unloadAsync();
+        // } catch (error) {
+        //     // An error occurred!
+        // }
+    }
+
+    _backwardTap = async () => {
+        const newIndex = this.state.currentIndex == 0 ? 0 : this.state.currentIndex-1;
+
+        await this.setState({
+            currentIndex: newIndex
+        })
+
+        return this.flatListRef.scrollToIndex({
+            animated: true,
+            index: newIndex
+        });
+    }
+
+    _forwardTap = async () => {
+        const newIndex = this.state.currentIndex == this.state.chapterData.verses_count ? this.state.chapterData.verses_count : this.state.currentIndex+1;
+
+        await this.setState({
+            currentIndex: newIndex
+        })
+
+        return this.flatListRef.scrollToIndex({
+            animated: true,
+            index: newIndex
+        });
     }
 
     render() { 
         return (
-            <SafeAreaView style={{ height: '100%' }}>
-                { this.state.isLoading ? <ActivityIndicator style={{ marginTop: '80%' }} /> : this.renderVerseCard() }
-            </SafeAreaView>
+            <View style={{ flex: 1, height: '100%' }}>
+                { this.renderPlayer() }
+                { !this.state.isLoading && this.renderVerseCard() }
+            </View>
         );
     }
 }
 
 const Style = StyleSheet.create({
     listStyle: {
-
+        paddingBottom: 75
     },
     basmallahContainer: {
         paddingVertical: 25,

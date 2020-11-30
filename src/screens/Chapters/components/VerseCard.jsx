@@ -25,8 +25,9 @@ const Style = StyleSheet.create({
     cardContainer: {
         flex: 1,
         paddingVertical: 25,
-        borderBottomColor: '#dedede',
-        borderBottomWidth: 1
+        borderBottomColor: '#CCCCCC',
+        borderBottomWidth: 1,
+        backgroundColor: '#f9f9f9'
     },
     arabicText: {
         textAlign: 'right',
